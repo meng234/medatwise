@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MedatWise — Our Team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root {
+    --navy:        #1c3a52;
+    --navy-deep:   #142a3d;
+    --navy-soft:   #2a4f6e;
+    --gold:        #c8923d;
+    --gold-soft:   #d9a85a;
+    --gold-pale:   #efdcb6;
+    --cream:       #f1e9dc;
+    --cream-soft:  #f7f1e6;
+    --ink:         #2a2a2a;
+    --muted:       #6b6b6b;
+    --white:       #ffffff;
+    --shadow:      0 12px 40px -10px rgba(20, 42, 61, 0.25);
+    --shadow-sm:   0 4px 14px -4px rgba(20, 42, 61, 0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Decorative animated background blobs */
+  .bg-decor {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.45;
+    animation: float 18s ease-in-out infinite;
+  }
+  .blob.b1 { width: 480px; height: 480px; background: var(--gold-pale); top: -160px; left: -120px; }
+  .blob.b2 { width: 420px; height: 420px; background: #c9d8e6; bottom: -150px; right: -130px; animation-delay: -6s; }
+  .blob.b3 { width: 360px; height: 360px; background: var(--gold-pale); top: 40%; left: 55%; opacity: 0.3; animation-delay: -12s; }
+  @keyframes float {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33%      { transform: translate(40px,-30px) scale(1.08); }
+    66%      { transform: translate(-30px,40px) scale(0.95); }
+  }
+
+  /* Top bar */
+  .topbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 48px;
+    backdrop-filter: blur(8px);
+    background: rgba(241, 233, 220, 0.7);
+    border-bottom: 1px solid rgba(28, 58, 82, 0.08);
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--navy);
+    letter-spacing: 0.3px;
+  }
+  .brand-mark {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+    display: grid; place-items: center;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+    font-size: 18px;
+    box-shadow: var(--shadow-sm);
+  }
+  .brand small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    position: relative;
+    padding: 6px 0;
+    cursor: pointer;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+  }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { width: 100%; }
+
+  /* Views */
+  .view {
+    position: relative;
+    z-index: 1;
+    display: none;
+    animation: fadeUp 0.55s ease both;
+  }
+  .view.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ====== TEAM PAGE ====== */
+  .team-hero {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 70px 48px 30px;
+    text-align: center;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: '';
+    display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--gold);
+    vertical-align: middle;
+    margin: 0 14px;
+  }
+  .team-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(38px, 5vw, 58px);
+    color: var(--navy);
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .team-hero p {
+    color: var(--muted);
+    max-width: 620px;
+    margin: 0 auto;
+    font-size: 16px;
+  }
+
+  .team-grid {
+    max-width: 1180px;
+    margin: 50px auto 80px;
+    padding: 0 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 26px;
+  }
+
+  .member {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 28px 24px 26px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .member.in { opacity: 1; transform: translateY(0); }
+  .member::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(200,146,61,0) 0%, rgba(200,146,61,0.06) 100%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .member:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow);
+  }
+  .member:hover::before { opacity: 1; }
+  .member.featured {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: var(--white);
+  }
+  .member.featured .role { color: var(--gold-soft); }
+  .member.featured .meta { color: rgba(255,255,255,0.7); }
+  .member.featured .arrow { background: var(--gold); color: var(--navy); }
+
+  .avatar-wrap {
+    position: relative;
+    width: 120px; height: 120px;
+    margin: 0 auto 18px;
+  }
+  .avatar-ring {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--gold), transparent 60%, var(--gold));
+    opacity: 0;
+    transition: opacity 0.5s;
+    animation: spin 6s linear infinite;
+  }
+  .member:hover .avatar-ring { opacity: 1; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center top;
+    background-color: var(--cream-soft);
+    position: relative;
+    z-index: 1;
+    border: 3px solid var(--white);
+    box-shadow: 0 6px 18px -6px rgba(0,0,0,0.25);
+  }
+  .avatar.placeholder {
+    display: grid; place-items: center;
+    background: linear-gradient(135deg, #d9c79e 0%, #b89c63 100%);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 38px;
+  }
+
+  .member h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    line-height: 1.25;
+  }
+  .role {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .meta {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+    min-height: 60px;
+  }
+  .arrow {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--cream-soft);
+    color: var(--navy);
+    font-size: 18px;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .member:hover .arrow { transform: translateX(4px); }
+  .member.disabled { cursor: not-allowed; opacity: 0.85; }
+  .member.disabled:hover { transform: none; }
+  .badge-soon {
+    position: absolute;
+    top: 14px; right: 14px;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--cream);
+    color: var(--muted);
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  /* ====== CV PAGE ====== */
+  .cv-toolbar {
+    max-width: 980px;
+    margin: 24px auto 0;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    font-family: inherit;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--navy);
+    border: 1px solid rgba(28, 58, 82, 0.25);
+  }
+  .btn-ghost:hover { background: rgba(28, 58, 82, 0.06); }
+  .btn-primary {
+    background: var(--navy);
+    color: var(--gold);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow); background: var(--navy-deep); }
+
+  .cv-shell {
+    max-width: 980px;
+    margin: 24px auto 80px;
+    padding: 0 24px;
+  }
+  .cv {
+    background: var(--white);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .cv-top {
+    background: var(--cream-soft);
+    padding: 50px 56px 44px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cv-top::before {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--gold-pale) 0%, transparent 70%);
+    opacity: 0.6;
+  }
+  .cv-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(40px, 5.4vw, 60px);
+    color: var(--navy);
+    line-height: 1.0;
+    margin-bottom: 18px;
+  }
+  .cv-tags {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .cv-tags span:not(:last-child)::after {
+    content: '•';
+    margin-left: 14px;
+    color: var(--gold);
+  }
+  .cv-photo {
+    position: relative;
+    width: 200px; height: 240px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 14px 36px -10px rgba(20,42,61,0.35);
+    transform: rotate(0deg);
+    transition: transform 0.5s;
+  }
+  .cv-photo:hover { transform: scale(1.02) rotate(-1deg); }
+  .cv-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* CV body two columns */
+  .cv-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    background: var(--white);
+  }
+
+  .cv-side {
+    background: linear-gradient(170deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color: var(--white);
+    padding: 46px 32px;
+    position: relative;
+  }
+  .cv-side::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    width: 1px;
+    background: rgba(200,146,61,0.25);
+  }
+
+  .side-section { margin-bottom: 38px; }
+  .side-section:last-child { margin-bottom: 0; }
+  .side-head {
+    display: flex; align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .side-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(200,146,61,0.15);
+    border: 1.5px solid var(--gold);
+    display: grid; place-items: center;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .side-icon svg { width: 18px; height: 18px; }
+  .side-head h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .summary-text {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+  }
+  .edu-item {
+    margin-bottom: 16px;
+    padding-left: 14px;
+    border-left: 2px solid rgba(200,146,61,0.35);
+    transition: border-color 0.3s;
+  }
+  .edu-item:hover { border-left-color: var(--gold); }
+  .edu-item:last-child { margin-bottom: 0; }
+  .edu-degree {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 2px;
+  }
+  .edu-school {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.4;
+  }
+
+  .cv-main {
+    padding: 46px 48px;
+    background: var(--white);
+  }
+  .main-section { margin-bottom: 38px; }
+  .main-section:last-child { margin-bottom: 0; }
+
+  .main-head {
+    display: flex; align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .main-icon {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--gold);
+    display: grid; place-items: center;
+    flex-shrink: 0;
+    box-shadow: 0 6px 14px -6px rgba(28,58,82,0.5);
+  }
+  .main-icon svg { width: 20px; height: 20px; }
+  .main-head h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .main-head::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(28,58,82,0.15), transparent);
+  }
+
+  .item-list { list-style: none; padding-left: 8px; }
+  .item-list li {
+    position: relative;
+    padding: 9px 0 9px 24px;
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.55;
+    border-bottom: 1px dashed rgba(28,58,82,0.08);
+    transition: padding-left 0.3s, color 0.3s;
+  }
+  .item-list li:last-child { border-bottom: none; }
+  .item-list li::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 50%;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    transform: translateY(-50%);
+    transition: transform 0.3s, background 0.3s;
+  }
+  .item-list li:hover {
+    padding-left: 30px;
+    color: var(--navy);
+  }
+  .item-list li:hover::before {
+    transform: translateY(-50%) scale(1.4);
+    background: var(--navy);
+  }
+  .item-list li b {
+    color: var(--navy);
+    font-weight: 600;
+  }
+  .item-list li .where {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Reveal-on-scroll */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px 24px 60px;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* Mobile */
+  @media (max-width: 880px) {
+    .topbar { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .team-hero { padding: 50px 24px 20px; }
+    .team-grid { padding: 0 24px; margin: 36px auto 60px; }
+    .cv-top {
+      grid-template-columns: 1fr;
+      text-align: center;
+      padding: 40px 28px 32px;
+    }
+    .cv-photo { margin: 0 auto; }
+    .cv-tags { justify-content: center; }
+    .cv-body { grid-template-columns: 1fr; }
+    .cv-side { padding: 36px 28px; }
+    .cv-main { padding: 36px 28px; }
+    .cv-toolbar { padding: 0 16px; }
+  }
+
+  /* When rendering for PDF, hide decor and use simpler layout */
+  .pdf-mode .bg-decor,
+  .pdf-mode .topbar,
+  .pdf-mode .cv-toolbar,
+  .pdf-mode .footer { display: none !important; }
+  .pdf-mode .cv-shell { margin: 0 auto; padding: 0; max-width: none; }
+  .pdf-mode .cv { box-shadow: none; border-radius: 0; }
+  .pdf-mode body { background: var(--white); }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">M</div>
+    <div>
+      MedatWise
+    </div>
+  </div>
+  <nav class="nav-links">
+    <a id="navHome" class="active">Our Team</a>
+    <a id="navAbout">About</a>
+    <a id="navContact">Contact</a>
+  </nav>
+</header>
+
+<!-- ====== TEAM VIEW ====== -->
+<section class="view active" id="teamView">
+  <div class="team-hero">
+    <div class="eyebrow">Leadership</div>
+    <h1>Meet the People<br/>Behind MedatWise</h1>
+    <p>A team of executives, clinicians and thinkers committed to building a smarter, kinder healthcare experience.</p>
+  </div>
+
+  <div class="team-grid" id="teamGrid"></div>
+</section>
+
+<!-- ====== CV VIEW ====== -->
+<section class="view" id="cvView">
+  <div class="cv-toolbar">
+    <button class="btn btn-ghost" id="backBtn">← Back to Team</button>
+    <button class="btn btn-primary" id="downloadBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PDF
+    </button>
+  </div>
+
+  <div class="cv-shell">
+    <article class="cv" id="cvCard">
+      <div class="cv-top">
+        <div>
+          <h1 class="cv-name">Dr. Sucharti<br/>Sungkasem</h1>
+          <div class="cv-tags">
+            <span>Executive Leader</span>
+            <span>Board Director</span>
+            <span>Educator</span>
+          </div>
+        </div>
+        <div class="cv-photo">
+          <img id="cvPhoto" alt="Dr. Sucharti Sungkasem" />
+        </div>
+      </div>
+
+      <div class="cv-body">
+        <aside class="cv-side">
+          <div class="side-section reveal">
+            <div class="side-head">
+              <div class="side-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <h4>Summary</h4>
+            </div>
+            <p class="summary-text">
+              Highly accomplished senior executive, board director, and economist with extensive leadership experience spanning insurance, banking, hospitality and academic sectors. Demonstrates strong governance and investment oversight in the medical services and hospitality industries through strategic hospital group directorships — backed by advanced global executive credentials from Harvard Business School and the Wharton School.
+            </p>
+          </div>
+
+          <div class="side-section reveal">
+            <div class="side-head">
+              <div class="side-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <h4>Education</h4>
+            </div>
+            <div class="edu-item">
+              <div class="edu-degree">Ph.D. in Economics</div>
+              <div class="edu-school">University of Miami, USA</div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-degree">Advanced Management Program (A.M.P.)</div>
+              <div class="edu-school">Harvard Business School, Boston, USA</div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-degree">MBA</div>
+              <div class="edu-school">New York Institute of Technology, Nova Campus, USA</div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-degree">Bachelor's, Agricultural Economics</div>
+              <div class="edu-school">Kasetsart University, Thailand</div>
+            </div>
+            <div class="edu-item">
+              <div class="edu-degree">National Defence College</div>
+              <div class="edu-school">Thailand — Class 399</div>
+            </div>
+          </div>
+        </aside>
+
+        <main class="cv-main">
+          <section class="main-section reveal">
+            <div class="main-head">
+              <div class="main-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M9 12h.01M9 15h.01M9 18h.01M15 9h.01M15 12h.01M15 15h.01M15 18h.01"/></svg>
+              </div>
+              <h3>Business Positions</h3>
+            </div>
+            <ul class="item-list">
+              <li><b>Chairman</b>, MedatWise Company Limited</li>
+              <li><b>Director</b>, Synphaet Hospital Group</li>
+              <li><b>Director</b>, PaePorPiang Company Limited</li>
+              <li><span class="where">Former</span> <b>President</b>, Muangthai Insurance Plc. (formerly Phatra Insurance Plc.)</li>
+              <li><span class="where">Former</span> <b>Advisor to the Board of Directors</b>, Muang Thai Insurance Plc.</li>
+              <li><span class="where">Former</span> <b>Head of Branch Development Division</b>, KASIKORNBANK Plc.</li>
+            </ul>
+          </section>
+
+          <section class="main-section reveal">
+            <div class="main-head">
+              <div class="main-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <h3>Professional Experience</h3>
+            </div>
+            <ul class="item-list">
+              <li><b>President</b>, Muangthai Insurance Plc. <span class="where">(Former Phatra Insurance Plc.)</span></li>
+              <li><b>Head of Branch Development Division</b>, KASIKORNBANK</li>
+            </ul>
+          </section>
+
+          <section class="main-section reveal">
+            <div class="main-head">
+              <div class="main-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </div>
+              <h3>Academic Positions</h3>
+            </div>
+            <ul class="item-list">
+              <li><b>Special Lecturer</b>, Thammasat University</li>
+              <li><span class="where">Former</span> <b>Director</b>, International Business Economics Program (English Program), Faculty of Economics, University of the Thai Chamber of Commerce</li>
+            </ul>
+          </section>
+
+          <section class="main-section reveal">
+            <div class="main-head">
+              <div class="main-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13.5L17 22l-5-3-5 3 1.5-8.5"/></svg>
+              </div>
+              <h3>Executive Training</h3>
+            </div>
+            <ul class="item-list">
+              <li><b>Making Corporate Boards More Effective</b> — Harvard Business School, USA</li>
+              <li><b>Strategic Planning Program</b> — Wharton School, University of Pennsylvania, USA</li>
+              <li><b>Scandia Management Program</b> — Stockholm, Sweden</li>
+              <li><b>General Insurance Program</b> — Munich Reinsurance, Munich, Germany</li>
+              <li><b>Re-Insurance Program</b> — Swiss Reinsurance, Zurich, Switzerland</li>
+              <li><b>Pacific Rim Banker Seminar</b> — Pattaya, Thailand</li>
+            </ul>
+          </section>
+        </main>
+      </div>
+    </article>
+  </div>
+</section>
+
+<footer class="footer">© Med@Wise Company Limited</footer>
+
+<script>
+/* ===== Profile photo (base64-embedded from PDF) ===== */
+const PHOTO_DATA_URL = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAEsARADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDtLTtV8n5azrQ4Aq6W+WuQ6TO1Rv3Sf7wrY1b/AJANv/u1i6kcxx/7wrb1f/kAW/8Au1UdmJ7o8l1L/j8k+tYGp/cH1rodQ5vZPrWBqo+UfWhDZJZL+5Wta3HNZlkP3C1r2y8ikwRr2Me5gK6iwiCgcVhadH0JrpLYcCoKNOEYAqz0FVoqmzxTQgc8VTmXIq0WqvIaGBlXEWc8VmTR47VuSrmqM0VIZiSJiqzpzWlNHjNVXSqQimVphWrRSmFKYiuVphWrBWmFaAINtJipStIVoAjApdvFPxTgvBoAr6eMmT61XkX/AImg+tXtOXmT61XkX/iaD60uox9+v7lfrUV2v7iKruoJ+4X61DeJ+5hoQ2Vb1f8ARPyqpAv7kVo36/6J+VVIF/cCmiSNhULCrTLUTDNUI9LtW+UVbLfLVG2PFWiflqCilqR+WP8A3xW9rB/4kEH+7XPaj92L/fFdBrQx4fg/3auOzIlujym//wCP2T61g6t9wfWt6+5u5PrWDqo+QfWkimWLD/j3Stq0XLCsfTx+4Wt2zXoaljRvWIxit637VgWZ6Vt27cCpGakZqQtxVZDUmeKYh5PHNROaVjxUZoAjaq0oGKfe3dvY2z3FzKscajJLGvIPFHxFk1GZ7XTy0VupwWB5erjFslySO21XxBptizI03mSL1SP5iK5e48eW6PtWydh6+YK8/l1QhfncBWOfLU5J+p6/lREL65Xdb6ZPKCOPkO39K15Ircjmb2O7j+IGmlsTwTxD1wCP51uWGtadqYzaXUch/u5w35GvHrnS9Zjy89hNGo/6Zms0XE0MoZWaN1PUcEGjkT2Dma3R9AFRUZWuF8H+MnlD22q3KbVHySOfmPt713kckdxGJIXV0PQqcis3FotO5GVppFTFaaVqRkQWnhflNKBzUg+6aQyDTl5k+tV5F/4m4+tXNOHzSfWoHH/E3X60uoyfUl/cD61Ber+4hq5qS/uF+tQ3y/6PDQgZVvl/0P8AKqUA/crWjqC4s/yqlAv7laa2EyNxxUDCrTioHFUI9CtulWS3y1Vg+7U56VIynftxEP8AbFdFrf8AyAIP92uavj/qf9+uk1sf8SCD/dFXHZkS3R5Vej/SpPrWHqg+QfWt29H+lSfWsXVBhB9alFFnTx+4Wtu16Csaw/490rYtzjFJjRtWpxWxA3ArDtzWvA+AKkZqI1S7qpo9ThqYiUmq91cw2VrLc3DhIYlLuxPAAqXNeS/F/wATvGsWg20mAwElzjv/AHV/r+VVFXdhN2RyXjTxtdeIr11RmislOIowe3qfc1neGvCupeKLoJbL5cCnDzN0FR+FPDNz4m1VYRlbdDmWT0Hp9a+h9E0i20e1jtLaMJGgAAH86dWr7Ncsdx0aPtHzS2Mnw18NdC0eNXa2F1cDrLMM8+w7V2cenwImFhUAcAAUy3uE3lTwQa043JUcZHrXMm57s7XaK0RmT2ELptaMflXKa94A0XV4mE1miyHpLGNrD8e9d2zg56VTucYyAelDvHVMektGj5s8W+Ar3wwftMRNxY54kA5T/eH9aj8PeKLjTZFG8MhIBjPQivedSjjuYHinRWjYYYMOCK8A8Y+GW8PaqTDlrSb54W9PVfwrpo1ef3ZbnHXo8j5o7HrdpdRX1pHcQtlXGfp7VIRzXC/D3V2nL2kjZ3DjJ7j/AOt/Ku+KgUSVmZp3RHil28GnY5p4HFSyiDTF+aX61C4/4nA/3qtaYMNL9agcf8Tgf71IZa1MYgH1qC+X/RoKs6p/x7r9agv/APj2gpIbINQ/48/yqjCP9HWtDUeLP8qowDMANUthMjYVA4q0w4qBqok7iE8CrBORVaD7tTE8VIIq3vWH/frp9bH/ABIIPdRXLXp5h/3q6nW/+QBb/wC7Vx2ZMt0eVXvF2/1rE1T7i/Wty95unPvWJqg+QfWpRTLlkP8ARkrUhrMsj/oyfStGI0mM17Y9K04WrGgbFacDUhmrGRU6tVKNqnDUCLG4BST2Ga+YvEl62s+K764JJ8ychc+g4FfRmr3X2PRL+57xW7uPqFNfM+n/AD36u5B3HJzW1Pa5nPXQ9o+H9nFp2kqiDlvmc+pru0cOQQa4rw5IY9NDHGMCuhk1mLTrQSlS7EcIOtcM7ykejBKMUdHHFg5wM+pq6kyIPmI9sV5bqPjXVkiDpZO2cghUJ21BZeMdSkcJcRbB3JPNWouOpPMpOx63vQnBYYqG4KlSFK8VyVlrZltyWOWPQVj6n4xlsyQq7gD1FK/NoW0o6nU30AYZx1681x3i3TItT0iSF1G+I+Yh9x1/SqNv8RyZiksQwDita51W01K2MltIDx8656UlCUGmQ5xmmjynwvGdP8aQwKwMbN8pz1HavXyK8n0VPP8AG1kyjiN2H5Zr1k12TOGOgzFPHQ/Sm08fdNZM0ItN+9L9arv/AMhgfWrGm/fl+tV5P+QuP96gC5qn+oX61Xv/APj3g/CptTP+jj61Xvj/AKPB+FJDYmo/8eX5VStx/o61cv8A/jz/ACqpb/8AHutUthMa4qBhVh6hY0yTsYDxU56VXi4FSluKAK9396H/AHhXU67/AMgCD/dFctdctD/vCur13/kAQf7oqo7Ml7o8pvOLl/rWJqv3F+tbd7/x9SfWsPVvuL9alFMuWR/0ZK0oqyrH/j3StOI4pDRowmtGA1lxHOK0IjQM0o2q0pqjG1WFagRT8TRtP4V1WJPvtayYH/ATXhtt4ZdtNjvbe5zIq73QjgfSvoB1EsTI3KsCCPrXmdpbLZWF3bswBjd4vwGQP50ObitCoQUnqdB4Yt5ZdJhkHlBXXO0jgn8+KddeTlLi6kVY1AYgt/OrfhlUezhiIUxhQGHatHUtBtnG62iEijPygcr6j3Fc99Tq5dEcpd+N7W1CxWGj+eJOBJKQoH4dfzrCk1SW9nCC22SM3KoOK6Sew0vzGMmN442ngmnWukieUCONFmPEajoo9Sa0bjYShK5c07Skm0N7lBtmXoS/Ix14xXG3N9DA7faB5hP+z6+xr2i1sFs/Dr2qcsRgsR1ry3UNHW1uXEqlwGw/sD0NTFJPUck2rIZp+p+GblRE0LxTKvzPJDx+YzUhh8u9jS1KfZZTh3UdFxUSaBAV3K5KseQa6Gx0z7BphfohywB7AVo2uhk4ySOW8NeHWs9burmR96IxELY+8O5rsjVPSlYafHJJ9+XMh/E5q5mru3uYWSegmKTOARRmjsaQEemn5pPrVeT/AJCw+tT6b96X61XkP/E3H+9SH0Lmp/8AHuo96gv/APj3g/CpdTP7hf8AeqK+/wCPeChANvh/of5VVg/1C1avT/omPpVa3/1C01sDGvUDCrD1A9Mk66L7tPNMj+7TzQBDddYP94V1euf8gG3/AN0Vyd19+D/fFdbrn/IBg/3RVR2ZD3R5Re/8fUn1rC1b7q/Wt29x9qk+tYWq/dX61KLZasji3WtKI1l2X+oTNaUNA0aEJq9E1Z8Z4q5EaANCNqsKapxmrCtSAsBq4zWLJE8QTqODOgnUf3sYDfyH5116tVLU7ZZ0ScR7pIshSOwPX+QpS2Kpu0kZWlu8SME4G84rU8686xnb75qkoERLDge1WUvR1JHFc71Z3QJGhupVEjmNMcl9ozUelxmaSW9kuhFAjhVz1lwefwqpdXc2rXMVjExjVj8zDsvc1leItJaS5WKCV0hhI2hXI/P1prUtvQ9AfxHZrC0XmLnOM1zM8s0moPLDtkjfIQkAhx3U1ycwu2gMSSbG/vjmrei2V3HpszCeVpIHEo3HO7rmqa0uQnqbiLYwncLXZIOSmSVB9qTUNZee0eFVAGNoqVporyzWXA3nqaz1tQ9xEBkjdk/zqUrsVTSLNdV2oq+gApDT6YcV0nniUE8Gimk8GkMj0370v1qtJ/yF1/3qsacfmk+tV5P+Qop/2qBlvUv9Sv1qG9/1ENSaif3C/Wo7z/UQ/hSQMS9/49PyqtBxAKtX3/Hp+VVIf9StNbAwc1C1StUTUyTr0+7QTTU6U40CIrj78H+8K63XOdCg/wB2uPumCmHJ6NXTavdLLoluF9KpPRie6PMb/i7k+tYOqnCD61uXx/0uT61haqfkH1qUUyzZH9wv0rSiNZdmf9HStGI0MZoRmrkZrPi6VdjNAF6NqnVqqxmpgaALIalblGHqMVEtYvinX30TT0FsqveXDbIVboP9o0JN6ITdtSTcDuTuKrT525U9Oop97BPpN4sFy+92RXLYwGyOv55qJmGT71yyTi7HdCSauUU1uHTHBZgJJBuLEdB6fSrs2tWF5ErCZNx9M1nRWSmZ5WAJzxx2pkum2LOWZPLLd16VasNN3LCmJm3GSMKT13CtaG9t7KEKCreZwSpzXLLo8Ukn/H0QO3Jp0mjJFulilkd16NuOM/SqaQSdtjVjk2F0jbKq2BWnp2WJZuw4rGsVcWrF8bnOTW9Ypstt3945FTBe8Z1Ze6WTTDTs0wmtzlEzSdjSGgnigCPT/vSfWoJP+QmP96prA/NJ9aryf8hQf71IC3qH+oH1qG7P7mGpdRP7lfrUN3/qYaEMW+P+i/lVWA/uRVi9/wCPX8qrwf6kUIQNUTGpn6VA1MR1FtcpPHlT061CL0DzC3asa2maz1BoifkbpVK+v9tw0QbqahysZuWhrSTSXkyKvQt1ruNStvs+gwc8kVwtncwx+Qo5YsK9B1eRZNBgx121UFo7gtzyu+P+lSfWsLVf9WPrW5e8Xcn1rD1X7g+tUjRk9n/qFrRirNs/9QtaMdIC7HVyJuxqlEatxigZcQirC1RkuYbWIyTyKijuTXPah4xK7o7CP/tq4/kKqMJS2Jcktzrbu9gsLVri4cLGo/P2FeS6/qtxquom7Y7dp/dr/dA6VZur+7vgTdTvJg8ZPA+grMmWumFLl3MZTue2wLD428GWd7AVF6iYyezDhlP1xXGSyS28rQzoUdDtZWHIqn8L/Ep0jXH0u5fFpecpnosg/wAR/KvVdf8ADlrrUJkwI7jHyygfofUVz1qV3dG9Gty6M4K2uIpBjgUXMULHggiqN5p95olwY7qMhc/K45U/jTDP068+9cnLZndGaZMkPPy1cjKRwnzExjqSetZpnZX4FW7GKTVdThslP3juf/ZUdSaq19BSmlqVTfwRSrCGBkduFHaurj/1S/QV5jrl2NL8dajCIwY4ptyr04IFdrpXibTNRRUWbypcY2S8Gt/ZOK0ON1ed6myaYaefamtSAZQelL0pp6UAR2A+aSq8n/ITH+9Vix6yVWk/5CQ/3qQdC1qH+pX61Fd/6iGn6if3K/Worv8A1ENAC3h/0X8qrwf6kVPef8ev5VXg/wBStNAK3NRtUj8VCxpiFaYS2XnPxIormUM1/qhC5wD1rTe6820CD73QiremaZ5S7wMM3eosY7mtp9rFA8AZgz7hXoWtqF0KAgY4rg1tUtRFOzEkNmuo1rVSdFgXZ1HArSOxfVHnt9/x9yfWsPUz+7H1rVu5i9w524yayNSOUX60kUyxZn/R1rRirNtTstVZuBUUuqsoKwDH+0apU5S2E5JG+Z4oE3yyKgHqazbvxMIwUtI9x/vv0H4VgzPJM26Vyx9SaiKZrojRS3M3Ub2JJ7qe7kMk8rSN7npUPU807oKYx44rW1jMOoNRSrkGoRfJG4SdTCx4Bb7p/Gp3IKZBBzQBnSb1kWSM7ZI2DKfQivobwNr66/4ehlc5lVdsg9CK8BZOa7v4W6k1lrcunk/u7gb1H+0Ov6fyqJrQpHrGp6bDeQNFPEskbdQRXnGteG5tNYzWwaW1HUdWT/EV63w6VxfjrxJY+GLNNxV72fiGInp/tN7CuacFI2pzcXoecXF0qpthBluDwka8ljXf+DdCk0vTWnu/mvbk7pD/AHR2UewrxdvE+sQzefHqQ3l92EiUY7+nSvW/AfjtfEX+hagiQ3qj5GHCy/T0PtUwpqJpUk2rnmHxFjaD4i3jEYWQIw9/lA/pWP3yvFekfGDQiHsdUjT5iXjc49gR/wCzV5uhygNdUdjlZt6X4m1HTsIsvmxf885OR+HpXXaf4xsbrC3Km3f1PK15vzu9u1SKcUnTixqbR7FHLHOgeJ1dD0KnIp2ODXlVjqNzYyb7eZo/UA8H6ius0TxU15eC0vFRWcfI68ZPoaxlSa1RoqiZ0lkPmkqrJ/yEx9atWX3pPrVWT/kJ/wDAqyNCxqH+pX61Fdf6mKpL8/uh9ajuv9TDQgC+/wCPT8qgt/8AUCrF7/x6flVaD/UihAK1RMM1I9RHpTEYulss92zv90dq0f7TZ7oQRA4HXFZelXEKRvuOGNa2jtBJOdihmJ5NIyRqTahHCsQmPQ961b3xDaXNlDFGm9wPTpXKapbS6jqUcCfKucEiuzn0KDSdDidUDSEdcUx31OLuGDysSMZNY+oFflLD5QeRWrdM3nNkY5rF1SRVQBztGc06avJIqT0K0moMx5OPQelReYG5/OqkpXG4HPpRFNg4rvRzl7qAaQmoBLglfSkEmTQA6Q4NMJok6ZpFIYUADqsiFWUMp9RxUaRLGoWNdqjoBSQsVleJzz95T6ipccUARFeKu6RftpmqW18md0EgfjuO4/KqrD5aZEcNikwPpTVdVt9N0ZdSUiTzUDQxg/6wkZGPavnbxla6tqGqTatdO07vyQB91ewA7AV6v8PCmt+G3tbuVpprf9wgY/6tRyuP89qbrWheTnCfd6g9x6VhJWZrB2PAE/eMBXX+F7ZpknSJytxA6yoV6j3/ADFUfEOmwWviHyYBtVlDMPc1D4d1mbRdZaaONZGUkFH5DoeoqTpa5ontWsSDxN4KnjnTbfWm15Ex1/2h7EZrw4xmGaWBhzGxWvpGwXT/ABDpMGqWhOJoNhwe3IKkex/lXg3ibT3sPEEqMMb+v1HFaxOSSMYe4x6U7GDSnr0pG6irIEZyopEuGinhlU4ZWyDSSdKrk42n/aFDA9j0ecXNssw6Oob86jl/5CY+tZvgi487RductE5Q/wAx/OtGT/kJj61wyVpNHUndFnUP9Sv1qO6/1MNSagf3K/Worv8A1MVShjrz/j1/Kq0H+qFT3h/0X8qgg/1IpoGK9QmpWNRGmI4C4uCjfI3Wuq0G5hsrBpnbMhFcPIxeRQPWugt4lFsPmzx0ptGCZ0lrr8G7zdvz7uK7S61qS+0mFTEVGOpFeZ2kcazRyuoCq2cV6Fc69p8ukwwQKPMx2pdCk9TmbmPMznNch4nBMsEYOAclj7V1dwzGViPWuR8SyB7iJB9/bg+wqqS94qb0MVpndyQML2xUsb4680KoCAVGw2nIrsMCyz42sPoaeknNVd2Ym9aejbgCKYGgTuSoVOHxTom+WmEfNTAW4QlRJH/rE5X39RUkUgljDr3pU+YYqADyLgof9XIcr7HuKAJWNQ/depiMg1DIDSA7/wCF+q/Y/Ev2Zmwl4m0Z/vjkf1r2fVNLS9iDgfeHP1r5j029lsbuG5gOJoJFkQ+4Oa+ptJvodU0iC7tzmKeMSp7ZGcfh0qJIpM+avFluI/F16g+7CwjH4CsOGyR23j76N19q6XxplfFmqk/eNw1cq0joSVbGaxPXgkoq56r8GNZMeoahoE0mY5V8+AHsw4YfiMH8Ki+K+kGGdb1V/iDE/Xg/yrgfCOqvo/i7Tb4thVnVXP8Asng/oa95+Immrf6BI6jKlTg/UVcWefiI2lddT53dcH2qN+gNTkZiX1HBqNxlSK1OYifpVWThCfSrXaq7jIYe1DGdx8Pbj99fW5PULIP5H+ldNJ/yEx9a4LwTc+T4giBPEqFT+X/1q7yT/kJD61yVVaRvB+6WNQ/1K/Wo7v8A1ENSX3+qH1qG65hirIsdef8AHr+VQQf6kVNd/wDHr+VV4D+6FMBzdKjapGNRtTEeXc+YABzXRWZa3twWXr61jxYjbcwyat3erbrURKMGqZzo0UWS+mSFGxubBxXdt4RWw0qO4RzvI9a830m+a1xKRkg5r0eLxPJqWmwwD5QByTSLVjn3Z45HVzwO9cVdS+fdzXT9Gb5R7dq6/WZRDbzuzYyMZrgZZjNLheFHStaC6in2JC5zS8GmnG3FNyRXQZjuhoibAx6HFAbPBqI/JMeeooA04CCtPwOtVIHq0KYDkbaaJlE0ZXOD1B9DSY5pcc0wGQuZI8HhlOGHvTmxUMv7mbzh91uH/oam6jNICJTsfNe5/CDW/tOjTaW7Zezfcmf7jc/oc/nXhT8HNdZ8PteGieKrSaV9lvOfImPYBuh/A4NJjRZ+Jlt9l8bX/GBIRIPxFcMy5JzXqvxntBHrtnd4x50GCfUg15a3Jrne561KXNTRVcEHjtX0x4avF8UfDmzkJ3SmDy3H+2nB/ln8a+anFexfA/Vv3WpaO7dGFzEP/HW/ktVEwxEbxuebatamx1W9tmBGyQkD61nDnNd78UdNFj4rMyDEdyhP41wY61sjgZDjqKidanbG44qJsfNn0oYE2jTfZtXtZc42yL/OvUJD/wATEfWvIY2IlJHY8V6vbTCdraXOd6K35iuesuprTZevz+5H1qO6/wBTDT7/AP1S/Wo7o/uYqwRqxb0/6L+VVoD+5FT3n/Hr+VV7f/UigQ89KjJqQmo2pgeZTl1TI5FVgxkZV6nNWMjysOan0y2VrsMfuirOY07CxYmMyDCZr0FrCCTR0e2AVgOvrXNrbNeyQwxLtUkDNdvPoU+l6ZE6vlSO9SaJHk/iqeeHy7ZyfmJasOFNkW8966HxlC0mqW79tpBH41hTuoxGvQda6aa90iW4zOead0piAU4jAzWhIMnGV/Kq0z4Kt74qdXqtdY2EigC3byVoI3FYtu9aEbnHWhMC5nml3VArVMDTGDqJFKHoait2Zd0L/eT9R2NTio514Eij5l6+4oEI44psbYOCeKkJDLkd6gYYNAHqHi6//wCEi+Gmjaqzbri0l+zTnvnb1/HA/OvN7SOOe8hjl3bGYA7TzW/4bvftGj6zokzfJc2xnhU/89ovmGPqoYVy5J3cHGKwmtT0MNK8LF7WLW3geJ7cFUkU/Ix+ZSCRz6Z61pfD3V/7G8a6fOz7YpH8mT6Nx/PFYNzczXTK08rOVUKC3YDoKZbW891OEtv9YvzZJxjHel1NWvdsz2f4v2m+3tbsD/VOBn2PH+FeON94/WvZfFt8niL4W2+pR/eaBGk9nUgMPzBrxl+Tn1raOx5jIpGw1QliWFSScmmACmxFfOJyPc16T4cn87TrI91XYfwOK82bi6b613XgyTdbPF/clz+YrGr8JpT3Otvj+6H1qK6/1MVOv/8AVD60y5P7mKuY2C8/49qhg/1AqW8/49agg/1IpiHmkNB6U3dQB5NKzFx6V0Wg2Ekg85vujmsFtu4E1tx6w0NkIYhjNWznR2ulS7ruFFUcNXpevf8AIEt/92vFtK1CeARsqlnJr0O8124m0uFLiIqMdak1TPLfFEu3VXc/8s0wPqa5ZSWkz1zWx4lulu9YmEf3VOPxrNjjwMmuqC0RlLckxhaYWNOLdqYwyKskT5aq3WRGec1YK471UuydtJgNt24rRiesmA4NaEbUkM0FapA9VEepQaoRaVuOtLu9arh6UvTAUN5Umz+E8rQ2MVFI4K+/UUgk3qDQBYtLlrS6inXrG4b647U242rO4TlN3y/TtUGcGgNnI9DWc1odWFlaVgY1JbXAt5lcglOjAHBI9veomFMIrI7Wrqx6R4a1YX/w88Q6e55haSaNSeQrgn+Y/WuAJ4HuKveGNQFrdajbM2EubR1x6kDI/rWcx/dp9K2hsebVVpjX+9TO9JI3zUgaqZmQSf8AH1J9R/Kuu8FSYvpo/wC8ob8jXHyn/SXPvXS+D5NutxD+8pFZT+EqO56Fff6sfWmXXMMVOvT+6X60y6P7mKuU3C7/AOPb8qrw/wCpFT3Z/wBGqvB/qRTQD2phpxNRs1AHlDMSQK1bS0Z4Q7dqrLalWDSDANa8cD/ZsxHIxTcjmNLSrlYbmEOo2gjOa9R1K6sbnQ4fL25VecV45ZGQzqrjvzXfXMaQaB5scnzBCSM+1JMtM8qmXddSOerOT+tMlcAbRTpG2hmPVulVfvHmu1bEEgz1oPNOH3cUymIa2apXR4Aq45xVC4PzVLGNh6mrkZ4qnEaso1JAWVbFWFfNUw2aerH1qrgXc8UhNQo/vU2M0xEL9aiify5yjdG5H1qyVFQTwl48rww5BoAnNKPvfWoYJfNiB/iHBqTt9KT1RdOXLJMfTW5FPRWfgUxxgkZ6Vger0uUpJWguY5E6qavueF9hWZcAmdR6kVfbgge1aw2POr/GRvy5oU80dWP1oX71UzErSHMzfWuj8I861BjsT/KuZzlyfU10fg+VU12NW/iBA+tRLZlR3PR77/VL9ajuj+5ip18f3Q+tMuj+4irkNwu/+PX8qggP7kVNd82lV4P9SKYDyaYTTmOajY0AcprkCxWasvcVW0e/8nCPyDUupzi602Mqeay7LashDHmklpZnMdKkcDXincAGNdDrVg9poL3Ecu6LZzzXIW9tPdSKqA5zxXQayuoWfhp7a4BKOAAfxqorUs8+lJbk/hTAKfNjzNo7cUqoNvBrsIExxTWqQ4AqGRgBTERSNVGb71WHPNVpDlqhjFjqcVDF1qfFADwaUE0ztRmmBYVverCPVFWqdHxTTAuHkU00ivkUp5FMRSYm3uN4+4/B9qtZ79jTJow8ZWobWUkGJ/vL096Qy0rEAgGjmmk4wacTxWUlZnoUJ80Cmw3XaD3q4/3vpVeL5rrHoM1I7cMc1cNjkrfGNU8Z9adnETt6Cmj7tMuTssm9zimzIqI/rWpps7W2o2so7SKc/jWHuqxDeNERkdDkVLGj2y95iX61Hc/6mKs/TdXTWdGiulG192119CKv3P8AqYq5WrM6EF3/AMe1VoD+6FWLv/j2P4VXh/1IoAcTTD0pTTCaAPOork/ZQjHmkt2U3QzVWKNpZgid667StBjTEs5GSO9W7IwSbLelajHb3MIK/KCMnFdr49urWbwOsy4DArj8656y0+1N5Gu0bc1e+KNqln4Y0+OI8Szcj6KaIblvRHkLuzNkVLCzDrUsEK43Ht3pLiRFOFrqMhjuScConGOTS+cg70EiQdc0AVJDxVc9aszAAGqtSwHxnBqypGKrIpIyKlXPShATYpGBpASDzUgIPWmBGBT8kU7Ao2UAPST3q0jA1QIxT0lK00wLpXiqFyjRSLMvUdauRyhhzSyoJFI7GnuIjWQSxbh3pQ+UqlE5tZjGx+Q1O52Mffms5ao6KE+V2HW3+tkb0GKc3OB70lqMws395qcSA59uKpbGU3eTEPpUN+2IEX1bNSjlqraif9WvsaGSVVTIyTgVZjCtgeVvx3NRW8m3hlyv8quxujHao5NJAd74btTbaCrldvnSFwPboK3bo/uo6p2VwLrRLSUAD5ApA7EcH+VWrv8A1MVcstWdC2C6P+jH8KghP7oVNdf8ep5qvCf3IpDHNTTSk1GxoEcHpoEd4Mjk12scLyqrMcDHSuV08I98gxzXarwoHtVMiKH2KgXKc9DS/EyU3Wl6VFn5UdyT6cCktuLkfWsP4h3cryWdpGpOELn8Tj+lOn8Q5bHE3d4FHlxjgcCqH7yVu/4VbjspWfMi4+tTSSW1qMfeb0FdNjErRadM4zwPrT3g+yruaQfQVHLqM8gwnyr7VUJeRucsaNAFeQsaaEJQtjgHGaf5EmQCuCegrVvdPaw0SHzB+8kk3N7ccCobGkZMbbWq3sDjcKrIu5fcVLGxiPsatCJMdjSFcdKsBElXIPNNaIiiwEOTTg1KVI4o8ugBwwaaUpdpFSDmmBDypqdJh0JpGUGoTGQeKQElxCJkyvUVVWUmMo33l6VOsrIeahnVXYOnBPWh6hsX4FCWasegGTUKnPJ6nmluHxFHEPTJpidKYEsf3hUGorloyB6ip4x81Mv1PlKw6hqQFIQu3BOBUggdCCrZNOhd+jLkVbDKnTrRYDsfC08kmivE/WOX+Yroro/uo65zwsMaTK56tN/Suiuj+6jrln8RvHYS6P8Ao1Qw/wCqFTXZ/wBFqvAf3IqShxqNjT2qNqYjkdJKnVFORiu1DKejD868uE8kOHjYhqsQ6zfBgPNquW5Cdj0mA4uM+9ZXjiMqLK6UDOGQk9+4/rWfo+o3Ms6b3zzW74zUP4bjcj5lkUg/nRHSQ3qjz55mn/ds2wHvTBpkeclmaoZSQ3FJHNIrDDGuq5iW/swAwI+KrXMiWrbVVTIfToKtmVyvWqwjSRndlBY96YirZ3jQahFcP821uQa3vFEitZ2u0/K5LD6YFY/kohJC8+9WNTleTStNDHOFcD8GxWTjqmWnpYzoBg1Z2Bhg1DFVgVoiCNQ0Z46VZSUMMGkIGKZgUAStGCMim7KchO2n0wI9lASpAOaXHSkAzaKaVqWkPWgZAYwetQyQKq7ySMHirfU1X1AkRgDpQAuPM+bOeaMYoHABHBIyakPK0rAC0XY3wMPxpq9KmbmI59KAM+Al1IUgNUqB0b5hkVRR2jkypxg1pSMdqn1HNCA73RY/K8PWx/vkv+tatyf3UdYmhSM+gRBjwkhUfStm5P7qKuWW50LYddf8exqCD/VCprn/AI9jUEP+pFSA9jULU9jUbUwP/9k=";
+
+/* ===== Team data ===== */
+const team = [
+  {
+    id: 'suchart',
+    name: 'Dr. Sucharti Sungkasem',
+    role: 'Chairman',
+    meta: 'Board director and economist with global executive credentials from Harvard and Wharton.',
+    photo: PHOTO_DATA_URL,
+    featured: true,
+    interactive: true
+  },
+  {
+    id: 'somying',
+    name: 'Dr. Somying Wattana',
+    role: 'Chief Medical Officer',
+    meta: 'Hospital operations and clinical governance leader with 25+ years across Southeast Asia.',
+    initials: 'SW'
+  },
+  {
+    id: 'kittipong',
+    name: 'Kittipong Rattana',
+    role: 'Chief Executive Officer',
+    meta: 'Healthcare technology executive focused on patient-centred service design.',
+    initials: 'KR'
+  },
+  {
+    id: 'naree',
+    name: 'Naree Phongchai',
+    role: 'Chief Financial Officer',
+    meta: 'Former audit partner and seasoned CFO for listed healthcare and insurance groups.',
+    initials: 'NP'
+  },
+  {
+    id: 'aran',
+    name: 'Aran Vatanasapt',
+    role: 'Chief Technology Officer',
+    meta: 'AI and data platform builder; previously led engineering at regional digital health ventures.',
+    initials: 'AV'
+  }
+];
+
+/* ===== Build team grid ===== */
+const grid = document.getElementById('teamGrid');
+team.forEach((m, idx) => {
+  const card = document.createElement('div');
+  card.className = 'member' + (m.featured ? ' featured' : '') + (m.interactive ? '' : ' disabled');
+  card.style.transitionDelay = (idx * 80) + 'ms';
+  card.innerHTML = `
+    ${!m.interactive ? '<div class="badge-soon">Profile soon</div>' : ''}
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      ${m.photo
+        ? `<div class="avatar" style="background-image:url('${m.photo}')"></div>`
+        : `<div class="avatar placeholder">${m.initials}</div>`}
+    </div>
+    <h3>${m.name}</h3>
+    <div class="role">${m.role}</div>
+    <div class="meta">${m.meta}</div>
+    <div class="arrow">→</div>
+  `;
+  if (m.interactive) {
+    card.addEventListener('click', () => showCV());
+  }
+  grid.appendChild(card);
+  // staggered enter
+  requestAnimationFrame(() => {
+    setTimeout(() => card.classList.add('in'), 60 + idx * 90);
+  });
+});
+
+/* ===== View switching ===== */
+const teamView = document.getElementById('teamView');
+const cvView = document.getElementById('cvView');
+const cvPhoto = document.getElementById('cvPhoto');
+cvPhoto.src = PHOTO_DATA_URL;
+
+function renderView(view, { push = true } = {}) {
+  if (view === 'cv') {
+    teamView.classList.remove('active');
+    cvView.classList.add('active');
+    triggerReveal();
+  } else {
+    cvView.classList.remove('active');
+    teamView.classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (push) {
+    history.pushState({ view }, '', view === 'cv' ? '#suchart' : '#team');
+  }
+}
+function showCV()   { renderView('cv'); }
+function showTeam() { renderView('team'); }
+
+document.getElementById('backBtn').addEventListener('click', showTeam);
+document.getElementById('navHome').addEventListener('click', showTeam);
+document.querySelector('.brand').addEventListener('click', showTeam);
+document.querySelector('.brand').style.cursor = 'pointer';
+
+// Browser back/forward buttons
+window.addEventListener('popstate', (e) => {
+  const view = (e.state && e.state.view) || (location.hash === '#suchart' ? 'cv' : 'team');
+  renderView(view, { push: false });
+});
+
+// Deep-link support: if URL already has #suchart, open CV directly
+if (location.hash === '#suchart') {
+  renderView('cv', { push: false });
+} else {
+  history.replaceState({ view: 'team' }, '', '#team');
+}
+
+// Esc key goes back to team from CV
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && cvView.classList.contains('active')) showTeam();
+});
+
+/* ===== Reveal on view ===== */
+function triggerReveal() {
+  const els = cvView.querySelectorAll('.reveal');
+  els.forEach((el, i) => {
+    el.classList.remove('in');
+    setTimeout(() => el.classList.add('in'), 120 + i * 120);
+  });
+}
+
+/* ===== PDF download ===== */
+document.getElementById('downloadBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('downloadBtn');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = 'Preparing PDF…';
+  btn.disabled = true;
+
+  document.body.classList.add('pdf-mode');
+  // Make all reveal elements visible for capture
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+
+  const node = document.getElementById('cvCard');
+  const opt = {
+    margin: 0,
+    filename: 'Dr-Sucharti-Sungkasem-CV.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+  };
+
+  try {
+    await html2pdf().set(opt).from(node).save();
+  } catch (err) {
+    console.error(err);
+    alert('Sorry — PDF generation failed. Please try again.');
+  } finally {
+    document.body.classList.remove('pdf-mode');
+    btn.innerHTML = originalHTML;
+    btn.disabled = false;
+  }
+});
+
+/* Soft pointer-tracked spotlight on featured card */
+const featured = document.querySelector('.member.featured');
+if (featured) {
+  featured.addEventListener('mousemove', (e) => {
+    const r = featured.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    featured.style.background = `radial-gradient(circle at ${x}% ${y}%, #2a4f6e 0%, #142a3d 70%)`;
+  });
+  featured.addEventListener('mouseleave', () => {
+    featured.style.background = '';
+  });
+}
+</script>
+</body>
+</html>
