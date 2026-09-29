@@ -35,7 +35,7 @@ html { scroll-behavior: smooth; }
 html, body { height: 100%; }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Inter', 'Sarabun', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: var(--mw-ink);
   background: var(--mw-canvas);
   line-height: 1.6;
@@ -48,7 +48,7 @@ a { color: var(--mw-primary); text-decoration: none; transition: color .2s; }
 a:hover { color: var(--mw-mid); }
 
 h1, h2, h3, h4 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', Georgia, serif;
   font-weight: 700;
   color: var(--mw-deep);
   line-height: 1.15;
@@ -106,7 +106,7 @@ p { color: var(--mw-ink); }
   align-items: center;
   gap: 10px;
   color: var(--mw-primary);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-weight: 700;
   font-size: 30px;
   line-height: 1;
@@ -161,6 +161,55 @@ p { color: var(--mw-ink); }
   align-items: center; justify-content: center;
 }
 .nav-toggle svg { width: 22px; height: 22px; }
+
+/* -------- Language switch (EN / TH) -------- */
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--mw-line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  flex: none;
+}
+.lang-switch a {
+  display: inline-block;
+  padding: 5px 13px;
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  line-height: 1.35;
+  color: var(--mw-muted);
+  transition: background .25s ease, color .25s ease;
+}
+.lang-switch a:hover {
+  color: var(--mw-deep);
+  background: var(--mw-pale);
+}
+.lang-switch a.active,
+.lang-switch a.active:hover {
+  background: var(--mw-primary);
+  color: var(--mw-white);
+}
+
+/* -------- Thai typography tuning -------- */
+/* Thai stacks vowel and tone marks above and below the baseline, so the
+   Latin line-heights clip. Wide tracking also hurts a script with no
+   word spaces. Scoped to <html lang="th"> so English is untouched. */
+html[lang="th"] h1,
+html[lang="th"] h2,
+html[lang="th"] h3,
+html[lang="th"] h4 { line-height: 1.38; }
+html[lang="th"] .eyebrow { letter-spacing: 1.5px; }
+html[lang="th"] .nav-links a { letter-spacing: 0.2px; }
 
 /* -------- Layout containers -------- */
 main { position: relative; z-index: 1; }
@@ -243,7 +292,7 @@ main { position: relative; z-index: 1; }
   margin-bottom: 18px;
 }
 .hero .tagline {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-style: italic;
   font-size: clamp(18px, 2.4vw, 24px);
   color: var(--mw-mid);
@@ -286,7 +335,7 @@ main { position: relative; z-index: 1; }
   margin-bottom: 16px;
 }
 .pillar-icon svg { width: 24px; height: 24px; }
-.pillar h3 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; color: var(--mw-deep); margin-bottom: 8px; }
+.pillar h3 { font-family: 'Inter', 'Sarabun', sans-serif; font-size: 17px; font-weight: 700; color: var(--mw-deep); margin-bottom: 8px; }
 .pillar p { color: var(--mw-muted); font-size: 14px; }
 
 /* -------- Service cards -------- */
@@ -306,7 +355,7 @@ main { position: relative; z-index: 1; }
   border-top: 4px solid var(--mw-accent);
 }
 .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
-.service-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 12px; color: var(--mw-deep); }
+.service-card h3 { font-family: 'Playfair Display', 'Noto Serif Thai', serif; font-size: 22px; margin-bottom: 12px; color: var(--mw-deep); }
 .service-card p { color: var(--mw-muted); font-size: 14.5px; }
 
 /* -------- Steps (How it works) -------- */
@@ -339,7 +388,7 @@ main { position: relative; z-index: 1; }
 }
 .step::before {
   content: counter(step, decimal-leading-zero);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-size: 40px;
   font-weight: 700;
   color: var(--mw-accent);
@@ -347,7 +396,7 @@ main { position: relative; z-index: 1; }
   position: absolute;
   top: 14px; right: 20px;
 }
-.step h4 { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--mw-deep); margin-bottom: 8px; padding-right: 36px; }
+.step h4 { font-family: 'Playfair Display', 'Noto Serif Thai', serif; font-size: 17px; color: var(--mw-deep); margin-bottom: 8px; padding-right: 36px; }
 .step p { color: var(--mw-muted); font-size: 14px; }
 
 /* -------- Packages -------- */
@@ -477,13 +526,13 @@ main { position: relative; z-index: 1; }
   display: grid; place-items: center;
   background: linear-gradient(135deg, var(--mw-mid) 0%, var(--mw-accent) 100%);
   color: var(--mw-white);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-weight: 700;
   font-size: 36px;
 }
 
 .member h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 4px;
@@ -569,7 +618,7 @@ main { position: relative; z-index: 1; }
   opacity: 0.6;
 }
 .cv-name {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-weight: 700;
   font-size: clamp(34px, 4.8vw, 54px);
   color: var(--mw-deep);
@@ -605,7 +654,7 @@ main { position: relative; z-index: 1; }
   display: grid; place-items: center;
   background: linear-gradient(135deg, var(--mw-mid) 0%, var(--mw-accent) 100%);
   color: var(--mw-white);
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-weight: 700;
   font-size: 64px;
 }
@@ -633,7 +682,7 @@ main { position: relative; z-index: 1; }
 }
 .side-icon svg { width: 18px; height: 18px; }
 .side-head h4 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-size: 14px;
   letter-spacing: 2.5px;
   text-transform: uppercase;
@@ -661,7 +710,7 @@ main { position: relative; z-index: 1; }
 }
 .main-icon svg { width: 20px; height: 20px; }
 .main-head h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Playfair Display', 'Noto Serif Thai', serif;
   font-size: 18px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -720,7 +769,7 @@ main { position: relative; z-index: 1; }
   flex-shrink: 0;
 }
 .contact-item .ci-icon svg { width: 22px; height: 22px; }
-.contact-item h4 { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--mw-accent); margin-bottom: 4px; }
+.contact-item h4 { font-family: 'Inter', 'Sarabun', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--mw-accent); margin-bottom: 4px; }
 .contact-item p, .contact-item a { font-size: 14.5px; color: var(--mw-ink); }
 .contact-item a.ci-link { font-weight: 600; transition: color .2s; }
 .contact-item a.ci-link:hover { color: var(--mw-accent); }
@@ -809,11 +858,11 @@ main { position: relative; z-index: 1; }
   border-bottom: 1px solid rgba(255,255,255,0.12);
 }
 .footer-brand img { height: 56px; width: auto; object-fit: contain; margin-bottom: 14px; }
-.footer-brand h4 { color: var(--mw-white); font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 8px; }
+.footer-brand h4 { color: var(--mw-white); font-family: 'Playfair Display', 'Noto Serif Thai', serif; font-size: 22px; margin-bottom: 8px; }
 .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.75); max-width: 360px; }
 
 .footer-col h5 {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', 'Sarabun', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -857,6 +906,8 @@ main { position: relative; z-index: 1; }
   .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--mw-line); }
   .nav-links a:last-child { border-bottom: none; }
   .nav-toggle { display: inline-flex; }
+  .topbar-right { gap: 12px; }
+  .lang-switch a { padding: 5px 10px; font-size: 11px; }
 
   .section { padding: 56px 20px; }
   .hero { padding: 60px 20px 50px; }
@@ -952,7 +1003,7 @@ main { position: relative; z-index: 1; }
   }
   .side-icon svg, .main-icon svg { width: 19px !important; height: 19px !important; }
   .side-head h4, .main-head h3 {
-    font-family: 'Playfair Display', serif !important; font-size: 17px !important;
+    font-family: 'Playfair Display', 'Noto Serif Thai', serif !important; font-size: 17px !important;
     letter-spacing: 2px !important; text-transform: uppercase !important;
     color: var(--mw-deep) !important; font-weight: 700 !important;
   }
